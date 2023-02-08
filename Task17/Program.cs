@@ -1,51 +1,59 @@
 ﻿// 17. Напишите программу, которая принимает на вход координаты точки (X, Y), отличные от (0, 0),
 // и выдаёт номер четверти плоскасти, в которой находится эта точка.
 
-int X = 0, Y = 0;
+Task17Method();
 
-Console.WriteLine("Enter coordinates (X, Y) not equal to (0, 0)");
-
-Console.Write("X: ");
-
-while (!int.TryParse(Console.ReadLine(), out X) || X == 0)
+void Task17Method()
 {
-    System.Console.WriteLine("Enter integer number other than 0");
-    Console.Write("X: ");
+        Console.WriteLine("Enter coordinates (X, Y) not equal to (0, 0)");
+
+        int x = ReadInt("X: ");
+        int y = ReadInt("Y: ");
+
+        if (x*y == 0)
+        {
+            System.Console.WriteLine("The coordinates should not be equal to 0");
+        }
+        else
+        {
+            System.Console.WriteLine($"Coordinates ({x}, {y}) are in the quarter {GetQuarter(x, y)}");
+        }
 }
 
-Console.Write("Y: ");
-
-while (!int.TryParse(Console.ReadLine(), out Y) || Y == 0)
+int GetQuarter(int x, int y)
 {
-    System.Console.WriteLine("Enter integer number other than 0");
-    Console.Write("Y: ");
+    switch ((x, y))
+    {
+        case (> 0, > 0):
+            return 1;
+
+        case (< 0, > 0):
+            return 2;
+
+        case (< 0, < 0):
+            return 3;
+
+        case (> 0, < 0):
+            return 4;
+
+        case (0, 0):
+            return -1;
+    }
+
+    return -1;
 }
 
-switch ((X, Y))
+int ReadInt(string msg)
 {
-    case (> 0, > 0):
+    int res = 0;
+    
+    System.Console.Write(msg);
+
+    while (!int.TryParse(Console.ReadLine(), out res))
     {
-        System.Console.WriteLine($"Coordinates ({X}, {Y}) are in the quarter 1");
-        break;
+        System.Console.WriteLine("Imput error. Enter an integer number.");
+        System.Console.Write(msg);
     }
-    case (< 0, > 0):
-    {
-        System.Console.WriteLine($"Coordinates ({X}, {Y}) are in the quarter 2");
-        break;
-    }
-    case (< 0, < 0):
-    {
-        System.Console.WriteLine($"Coordinates ({X}, {Y}) are in the quarter 3");
-        break;
-    }
-    case (> 0, < 0):
-    {
-        System.Console.WriteLine($"Coordinates ({X}, {Y}) are in the quarter 4");
-        break;
-    }
-    case (0, 0):
-    {
-        System.Console.WriteLine($"Error. Coordinates ({X}, {Y})");
-        break;
-    }
+
+    return res;
 }
